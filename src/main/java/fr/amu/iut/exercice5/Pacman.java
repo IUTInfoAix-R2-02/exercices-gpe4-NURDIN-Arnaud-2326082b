@@ -25,21 +25,28 @@ public class Pacman extends Personnage {
     }
 
     @Override
-    public void deplacerADroite(double largeurJeu) {
-        super.deplacerADroite(largeurJeu);
+    public void deplacerADroite(double hauteurJeu) {
+        super.deplacerADroite(hauteurJeu);
         //sens de la bouche
         bouche.setEndX(bouche.getStartX() + LARGEUR_MOITIE_PERSONNAGE - .5);
         bouche.setEndY(bouche.getStartY());
     }
 
     @Override
-    public void deplacerEnBas(double hauteurJeu) {
-        // à compléter
+    public void deplacerEnHaut() {
+        super.deplacerEnHaut();
+        //sens de la bouche
+        bouche.setEndX(bouche.getStartX());
+        bouche.setEndY(bouche.getStartY() - LARGEUR_MOITIE_PERSONNAGE + .5);
     }
 
     @Override
-    public void deplacerEnHaut() {
-        // à compléter
+    public void deplacerEnBas(double hauteurJeu) {
+        super.deplacerEnBas(hauteurJeu);
+        //sens de la bouche
+        bouche.setEndX(bouche.getStartX());
+        bouche.setEndY(bouche.getStartY() + LARGEUR_MOITIE_PERSONNAGE - .5);
     }
+
 
 }
