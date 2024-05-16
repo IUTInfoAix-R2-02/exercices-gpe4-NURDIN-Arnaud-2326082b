@@ -181,7 +181,7 @@ public class JeuMain extends Application {
                 nbj2++;
                 Platform.runLater(() -> nb2.setText("Nombre de victoires : " + nbj2));
             }
-        }, 0, 60000);
+        }, 0, 30000);
 
         primaryStage.setTitle("Pacman1v1.io");
         primaryStage.setScene(scene);
@@ -233,6 +233,7 @@ public class JeuMain extends Application {
                 j1.setLayoutY(400);
                 // Arrêt du timer existant et création d'un nouveau
                 timer.cancel();
+                nbj2--;
                 timer = new Timer();
                 timer.scheduleAtFixedRate(new TimerTask() {
                     @Override
@@ -240,7 +241,7 @@ public class JeuMain extends Application {
                         nbj2++;
                         Platform.runLater(() -> nb2.setText("Nombre de victoires : " + nbj2));
                     }
-                }, 0, 60000);
+                }, 0, 30000);
             }
             for (Obstacle value : obstacle) {
                 if (value.collisionMur(j1)) {
