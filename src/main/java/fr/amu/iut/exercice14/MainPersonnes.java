@@ -1,4 +1,4 @@
-package fr.amu.iut.exercice4;
+package fr.amu.iut.exercice14;
 
 import javafx.beans.binding.IntegerBinding;
 import javafx.beans.property.IntegerProperty;
@@ -14,15 +14,56 @@ public class MainPersonnes {
     private static IntegerProperty nbParisiens;
 
     private static IntegerBinding calculAgeMoyen;
-    private static IntegerBinding calculnbParisiens;
+    private static IntegerBinding calculNbParisiens;
 
     public static void main(String[] args) {
 
         lesPersonnes = new SimpleListProperty<>(FXCollections.observableArrayList());
         ageMoyen = new SimpleIntegerProperty(0);
+        nbParisiens = new SimpleIntegerProperty(0);
 
+        // Define custom binding for average age
+        calculAgeMoyen = new IntegerBinding() {
+            {
+                bind(lesPersonnes);
+            }
+
+            @Override
+            protected int computeValue() {
+                if (lesPersonnes.isEmpty()) {
+                    return 0;
+                }
+                int totalAge = 0;
+                for (Personne p : lesPersonnes) {
+                    totalAge += p.getAge();
+                }
+                return totalAge / lesPersonnes.size();
+            }
+        };
+        ageMoyen.bind(calculAgeMoyen);
+
+        // Define custom binding for number of Parisians
+        calculNbParisiens = new IntegerBinding() {
+            {
+                bind(lesPersonnes);
+            }
+
+            @Override
+            protected int computeValue() {
+                int count = 0;
+                for (Personne p : lesPersonnes) {
+                    if ("Paris".equals(p.getVilleDeNaissance())) {
+                        count++;
+                    }
+                }
+                return count;
+            }
+        };
+        nbParisiens.bind(calculNbParisiens);
+
+        // Test the bindings
         question1();
-//        question2();
+        question2();
     }
 
     public static void question1() {
@@ -47,11 +88,10 @@ public class MainPersonnes {
         lesPersonnes.get(0).setVilleDeNaissance("Marseille");
         System.out.println("Il y a " + nbParisiens.getValue() + " parisiens");
         lesPersonnes.get(1).setVilleDeNaissance("Montpellier");
-        System.out.println("Il y a " + nbParisiens.getValue() + " parisien");
-        for (Personne p : lesPersonnes)
+        System.out.println("Il y a " + nbParisiens.getValue() + " parisiens");
+        for (Personne p : lesPersonnes) {
             p.setVilleDeNaissance("Paris");
+        }
         System.out.println("Il y a " + nbParisiens.getValue() + " parisiens");
     }
-
 }
-
